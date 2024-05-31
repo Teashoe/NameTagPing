@@ -18,5 +18,5 @@ The Ping Nametag mod adds a feature that displays the ping (network latency) nex
    - Place the downloaded JAR file into your Minecraft `mods` folder (located in the `.minecraft` directory).
 
 # Demo
-![Demo](https://cdn.modrinth.com/data/cached_images/855966581f8cd5466bba4a9e60d99db4808512c6.png)
+![demo](https://cdn.modrinth.com/data/cached_images/a7e1f326ce4493234d5c30bba51e88491f8f8138.png)
 ![config](https://cdn.modrinth.com/data/cached_images/fb8a4843fb4aea0d174c4b54d7d139c6e5ed2101.png)
