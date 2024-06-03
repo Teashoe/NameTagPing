@@ -17,6 +17,16 @@ The Ping Nametag mod adds a feature that displays the ping (network latency) nex
    - Download the [Fabric API](https://modrinth.com/mod/fabric-api) and [Cloth Config API](https://modrinth.com/mod/cloth-config/versions?l=fabric)
    - Place the downloaded JAR file into your Minecraft `mods` folder (located in the `.minecraft` directory).
 
+# Configuration
+
+The configuration can be edited in-game if [Mod Menu](https://modrinth.com/mod/modmenu) is installed.
+
+| Option                 | Type            | Default Value | Description                                                                                                        |
+|----------------------- |-----------------|---------------|--------------------------------------------------------------------------------------------------------------------|
+| `enabled`              | `boolean`       | `true`        | Whether ping nametags are enabled or not.                                                                          |
+| `pingTextPosition`     | `Left \| Right` | `Right`       | The position of the ping text placed next to the name.                                                             |
+| `pingTextFormatString` | `String`        | `"(%dms)"`    | The format string for ping text. Must include a `%d`, which will be replaced dynamically by the actual ping value. |
+
 # Demo
 ![demo](https://cdn.modrinth.com/data/cached_images/a7e1f326ce4493234d5c30bba51e88491f8f8138.png)
 ![config](https://cdn.modrinth.com/data/cached_images/fb8a4843fb4aea0d174c4b54d7d139c6e5ed2101.png)
