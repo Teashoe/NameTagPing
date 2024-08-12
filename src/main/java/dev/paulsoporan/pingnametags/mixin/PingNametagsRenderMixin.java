@@ -12,6 +12,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.render.VertexConsumerProvider;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
@@ -25,7 +27,7 @@ import java.util.UUID;
 
 @Mixin(EntityRenderer.class)
 public class PingNametagsRenderMixin {
-    @ModifyArgs(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/EntityRenderer;renderLabelIfPresent(Lnet/minecraft/entity/Entity;Lnet/minecraft/text/Text;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V"))
+    @ModifyArgs(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/EntityRenderer;renderLabelIfPresent(Lnet/minecraft/entity/Entity;Lnet/minecraft/text/Text;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IF)V"))
     private void renderLabelIfPresent(Args args) {
         PingNametagsConfig config = PingNametagsConfigManager.getConfig();
         if (!config.getEnabled()) {
@@ -33,11 +35,10 @@ public class PingNametagsRenderMixin {
         }
 
         Entity entity = args.get(0);
-        if (!(entity instanceof AbstractClientPlayerEntity)) {
+        if (!(entity instanceof AbstractClientPlayerEntity abstractClientPlayerEntity)) {
             return;
         }
 
-        AbstractClientPlayerEntity abstractClientPlayerEntity = (AbstractClientPlayerEntity) entity;
         GameProfile gameProfile = abstractClientPlayerEntity.getGameProfile();
         String playerName = gameProfile.getName();
         UUID id = gameProfile.getId();
@@ -49,9 +50,6 @@ public class PingNametagsRenderMixin {
                 .filter(playerListEntry -> playerListEntry.getProfile().getId().equals(id))
                 .findFirst();
 
-        // There are various tab list plugins that create fake player entries
-        // that contain the real latency while the real entry has the wrong latency.
-        // TODO: use string similarity instead of equality
         List<PlayerListEntry> fakeEntries = playerList.stream()
                 .filter(playerListEntry -> {
                     Text displayName = playerListEntry.getDisplayName();
@@ -60,7 +58,6 @@ public class PingNametagsRenderMixin {
                     }
 
                     String displayNameString = collectText(displayName);
-
                     return displayNameString.equals(playerName);
                 })
                 .toList();
@@ -69,7 +66,7 @@ public class PingNametagsRenderMixin {
         if (fakeEntries.size() == 1) {
             selectedEntry = fakeEntries.get(0);
         } else {
-            if (!exactMatchEntry.isPresent()) {
+            if (exactMatchEntry.isEmpty()) {
                 return;
             }
 
