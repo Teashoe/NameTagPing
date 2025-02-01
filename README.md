@@ -1,8 +1,7 @@
 # Description
 
-The Ping Nametag mod adds a feature that displays the ping (network latency) next to player nametags in-game. This mod allows players to easily see the network latency of other players on the server.
-
-
+Puts a ping next to player nametags in-game. 
+This mod makes it easy for players to see the network latency of other players on the server.
 
 
 
